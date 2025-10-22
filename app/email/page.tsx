@@ -1,18 +1,30 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { authClient } from "@/lib/auth-client";
+import { getNotebooks } from "@/server/notebooks";
 
-const SendEmail = () => {
-  const handleSend = async () => {
-    const res = await fetch("/api/send-email", {
-      method: "POST",
-      body: JSON.stringify({ to: "khanzaidan786@gmail.com" }),
-    });
+const GettingNotebooks = () => {
+  const handleNotebooks = async () => {
+    const userId = (await authClient.getSession()).data?.session.userId;
 
-    const result = await res.json();
-    console.log(result);
+    if (!userId) {
+      console.error("User not authenticated");
+      return;
+    }
+    const notebooks = await getNotebooks();
+    console.log(notebooks);
+
+    if (!notebooks.success) {
+      console.error(notebooks.message);
+      return;
+    }
   };
 
-  return <Button onClick={handleSend}>Send Email</Button>;
+  return (
+    <>
+      <Button onClick={handleNotebooks}>Fetch Notebooks</Button>
+    </>
+  );
 };
 
-export default SendEmail;
+export default GettingNotebooks;

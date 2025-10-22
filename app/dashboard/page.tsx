@@ -1,9 +1,8 @@
 import CreateNotebookButton from "@/components/create-notebook-button";
-import Notebooks from "@/components/notebooks";
-import { getNotebook } from "@/server/notebooks";
+import { getNotebooks } from "@/server/notebooks";
 
 export default async function Page() {
-  const notebooks = await getNotebook();
+  const notebooks = await getNotebooks();
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
       <CreateNotebookButton />

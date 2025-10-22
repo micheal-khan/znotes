@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronRight, type LucideIcon } from "lucide-react"
+import { Book, BookOpen, ChevronRight, type LucideIcon } from "lucide-react"
 
 import {
   Collapsible,
@@ -25,7 +25,6 @@ export function NavMain({
   items: {
     title: string
     url: string
-    icon: LucideIcon
     isActive?: boolean
     items?: {
       title: string
@@ -42,7 +41,7 @@ export function NavMain({
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip={item.title}>
                 <a href={item.url}>
-                  <item.icon />
+                  <Book />
                   <span>{item.title}</span>
                 </a>
               </SidebarMenuButton>
