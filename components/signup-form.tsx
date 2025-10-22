@@ -22,7 +22,6 @@ import { toast } from "sonner";
 import { signUpUser } from "@/server/users";
 import { useState } from "react";
 import { Spinner } from "./ui/spinner";
-import Link from "next/link";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),

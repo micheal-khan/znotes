@@ -11,7 +11,9 @@ export const createNotebook = async (values: InsertNotebook) => {
     await db.insert(notebooks).values(values);
     return { success: true, message: "Notebook created successfully" };
   } catch (error) {
-    return { success: false, message: error || "Failed to create notebook" };
+    const errMsg =
+      error instanceof Error ? error.message : "Failed to create notebook";
+    return { success: false, message: errMsg };
   }
 };
 
@@ -24,10 +26,10 @@ export const getNotebook = async () => {
     if (!userId) {
       return { success: false, message: "User not authenticated" };
     }
-    const notebooksByUser = await db
-      .select()
-      .from(notebooks)
-      .where(eq(notebooks.userId, userId));
+    const notebooksByUser = await db.query.notebooks.findMany({
+      where: eq(notebooks.userId, userId),
+      with: { notes: true },
+    });
     return { success: true, notebooks: notebooksByUser };
   } catch (error) {
     return { success: false, message: error || "Failed to get notebook" };
@@ -36,10 +38,10 @@ export const getNotebook = async () => {
 
 export const getNotebookById = async (id: string) => {
   try {
-    const notebooksById = await db
-      .select()
-      .from(notebooks)
-      .where(eq(notebooks.id, id));
+    const notebooksById = await db.query.notebooks.findMany({
+      where: eq(notebooks.userId, id),
+      with: { notes: true },
+    });
     return { success: true, notebooks: notebooksById };
   } catch (error) {
     return { success: false, message: error || "Failed to get notebook" };
