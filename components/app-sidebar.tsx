@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/sidebar";
 import { getNotebooks } from "@/server/notebooks";
 import { SearchForm } from "./search-form";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export async function AppSidebar({
   ...props
@@ -24,11 +26,20 @@ export async function AppSidebar({
     return;
   }
 
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.session.userId) {
+    console.error("User not found");
+    return;
+  }
+
   const data = {
     user: {
-      name: "shadcn",
-      email: "m@example.com",
-      avatar: "/avatars/shadcn.jpg",
+      name: session.user.name || "User",
+      email: session.user.email || "m@example.com",
+      avatar: session.user.image || "/avatars/shadcn.jpg",
     },
     navMain: [
       ...(notebooks.notebooks?.map((notebook) => ({
