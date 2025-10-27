@@ -1,6 +1,5 @@
 import * as React from "react";
 import { BookOpen, Command } from "lucide-react";
-
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
 import {
@@ -13,12 +12,12 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { getNotebooks } from "@/server/notebooks";
+import { SearchForm } from "./search-form";
 
 export async function AppSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   const notebooks = await getNotebooks();
-  console.log(notebooks);
 
   if (!notebooks.success) {
     console.error(notebooks.message);
@@ -34,7 +33,7 @@ export async function AppSidebar({
     navMain: [
       ...(notebooks.notebooks?.map((notebook) => ({
         title: notebook.name,
-        url: `/dashboard/${notebook.id}`,
+        url: `/dashboard/notebook/${notebook.id}`,
         items: notebook.notes.map((note) => ({
           title: note.title,
           url: `/dashboard/note/${note.id}`,
@@ -42,6 +41,7 @@ export async function AppSidebar({
       })) ?? []),
     ],
   };
+
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -60,6 +60,7 @@ export async function AppSidebar({
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
+        <SearchForm className="mt-1" />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />

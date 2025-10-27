@@ -14,9 +14,12 @@ export default async function NotePage({
       <Bread
         breadcrumbs={[
           { label: "Dashboard", url: "/dashboard" },
-          { label: "Note", url: `/dashboard/note/${params.noteid}` },
           {
-            label: note.note?.title || "Untitled",
+            label: note.note?.notebook.name || "Notebook",
+            url: `/dashboard/notebook/${note.note?.notebook.id}`,
+          },
+          {
+            label: "Note",
             url: `/dashboard/note/${params.noteid}`,
             active: true,
           },
@@ -24,10 +27,11 @@ export default async function NotePage({
       />
 
       <div className="p-4 flex flex-col gap-4">
-        <h1>{note.note?.title || "Untitled"}</h1>
-
         {/* TipTap editor */}
-        <TipTapEditor initialContent={note.note?.content || ""} noteId={params.noteid} />
+        <TipTapEditor
+          initialContent={note.note?.content || ""}
+          noteId={params.noteid}
+        />
       </div>
     </>
   );

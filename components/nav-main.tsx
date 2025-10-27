@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { Book, BookOpen, ChevronRight, type LucideIcon } from "lucide-react"
+import { Book, BookOpen, ChevronRight, type LucideIcon } from "lucide-react";
 
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+} from "@/components/ui/collapsible";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -17,26 +17,40 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import { useQueryState } from "nuqs";
 
 export function NavMain({
   items,
 }: {
   items: {
-    title: string
-    url: string
-    isActive?: boolean
+    title: string;
+    url: string;
+    isActive?: boolean;
     items?: {
-      title: string
-      url: string
-    }[]
-  }[]
+      title: string;
+      url: string;
+    }[];
+  }[];
 }) {
+  const [search] = useQueryState("search", { defaultValue: "" });
+
+  const filteredItems = items.filter((item) => {
+    const notebookMatches = item.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
+    const notesMatches =
+      item.items?.some((subItem) =>
+        subItem.title.toLowerCase().includes(search.toLowerCase())
+      ) ?? false;
+    return notebookMatches || notesMatches;
+  });
+
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>Notebooks</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
+        {filteredItems.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip={item.title}>
@@ -73,5 +87,5 @@ export function NavMain({
         ))}
       </SidebarMenu>
     </SidebarGroup>
-  )
+  );
 }
