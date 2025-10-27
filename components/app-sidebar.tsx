@@ -15,6 +15,7 @@ import { getNotebooks } from "@/server/notebooks";
 import { SearchForm } from "./search-form";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import Image from "next/image";
 
 export async function AppSidebar({
   ...props
@@ -59,13 +60,24 @@ export async function AppSidebar({
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <Command className="size-4" />
-                </div>
+              <a href="/">
+                <Image
+                  src={"/Znotes light.png"}
+                  alt="Logo"
+                  width={32}
+                  height={32}
+                  className="block dark:hidden"
+                />
+                <Image
+                  src={"/Znotes dark.png"}
+                  alt="Logo"
+                  width={32}
+                  height={32}
+                  className="hidden dark:block"
+                />
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Acme Inc</span>
-                  <span className="truncate text-xs">Enterprise</span>
+                  <span className="truncate font-medium">Znotes</span>
+                  <span className="truncate text-xs">Notes taking app</span>
                 </div>
               </a>
             </SidebarMenuButton>
