@@ -8,12 +8,16 @@ import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import Typography from "@tiptap/extension-typography";
 import Image from "@tiptap/extension-image";
-import { TaskList, TaskItem } from "@tiptap/extension-list";
+import TaskList from "@tiptap/extension-task-list";
+import TaskItem from "@tiptap/extension-task-item";
 import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
 import Link from "@tiptap/extension-link";
 import Color from "@tiptap/extension-color";
 import Code from "@tiptap/extension-code";
+import BulletList from "@tiptap/extension-bullet-list";
+import OrderedList from "@tiptap/extension-ordered-list";
+import { QuoteIcon } from "lucide-react"; // add this at the top with other icons
 
 import { Button } from "@/components/tiptap-ui-primitive/button";
 import {
@@ -22,6 +26,8 @@ import {
   ToolbarSeparator,
 } from "@/components/tiptap-ui-primitive/toolbar";
 import { Spacer } from "../tiptap-ui-primitive/spacer";
+import { updateNote } from "@/server/notes";
+import { TextStyle } from "@tiptap/extension-text-style";
 
 import {
   BoldIcon,
@@ -42,9 +48,6 @@ import {
   Highlighter,
 } from "lucide-react";
 
-import { updateNote } from "@/server/notes";
-import { TextStyleKit } from "@tiptap/extension-text-style";
-
 interface TipTapEditorProps {
   initialContent?: any;
   noteId?: string;
@@ -57,10 +60,10 @@ export default function TipTapEditor({
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        heading: false, // ❌ disable default heading
+        heading: false, // we'll add our own heading
       }),
       Heading.configure({ levels: [1, 2, 3, 4] }),
-      TextStyleKit,
+      TextStyle,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       Highlight.configure({ multicolor: true }),
       Typography,
@@ -74,12 +77,11 @@ export default function TipTapEditor({
       Code,
     ],
     content: initialContent || "<p>Start typing...</p>",
-    immediatelyRender: false, // SSR-safe
+    immediatelyRender: false,
     onUpdate: ({ editor }) => {
       if (noteId) {
         updateNote(noteId, { content: editor.getJSON() });
       }
-      console.log("📝 Updated JSON:", editor.getJSON());
     },
   });
 
@@ -142,6 +144,14 @@ export default function TipTapEditor({
           >
             <Code2 className="tiptap-button-icon" />
           </Button>
+
+          <Button
+            data-style="ghost"
+            onClick={() => editor.chain().focus().toggleBlockquote().run()}
+            className={editor.isActive("blockquote") ? "bg-muted" : ""}
+          >
+            <QuoteIcon className="tiptap-button-icon" />
+          </Button>
         </ToolbarGroup>
 
         <ToolbarSeparator />
@@ -153,7 +163,11 @@ export default function TipTapEditor({
               key={level}
               data-style="ghost"
               onClick={() =>
-                editor.chain().focus().toggleHeading({ level }).run()
+                editor
+                  .chain()
+                  .focus()
+                  .toggleHeading({ level: level as Level })
+                  .run()
               }
               className={
                 editor.isActive("heading", { level }) ? "bg-muted" : ""
@@ -215,6 +229,7 @@ export default function TipTapEditor({
           >
             <ListIcon className="tiptap-button-icon" />
           </Button>
+
           <Button
             data-style="ghost"
             onClick={() => editor.chain().focus().toggleTaskList().run()}
@@ -228,10 +243,16 @@ export default function TipTapEditor({
 
         {/* Undo / Redo / Image */}
         <ToolbarGroup>
-          <Button data-style="ghost" onClick={() => editor.chain().undo().run()}>
+          <Button
+            data-style="ghost"
+            onClick={() => editor.chain().undo().run()}
+          >
             <UndoIcon className="tiptap-button-icon" />
           </Button>
-          <Button data-style="ghost" onClick={() => editor.chain().redo().run()}>
+          <Button
+            data-style="ghost"
+            onClick={() => editor.chain().redo().run()}
+          >
             <RedoIcon className="tiptap-button-icon" />
           </Button>
           <Button
@@ -261,7 +282,7 @@ export default function TipTapEditor({
       {/* Editor Area */}
       <EditorContent
         editor={editor}
-        className="
+        className=" 
           w-full h-full flex-1 mt-4 prose dark:prose-invert max-w-none
           outline-none border-none focus:outline-none focus-visible:ring-0
           [&_.ProseMirror]:w-full [&_.ProseMirror]:h-full

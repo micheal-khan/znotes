@@ -5,9 +5,9 @@ import { getNoteById } from "@/server/notes";
 export default async function NotePage({
   params,
 }: {
-  params: { noteid: string };
+  params: Promise<{ noteid: string }>;
 }) {
-  const note = await getNoteById(params.noteid);
+  const note = await getNoteById((await params).noteid);
 
   return (
     <>
@@ -19,8 +19,8 @@ export default async function NotePage({
             url: `/dashboard/notebook/${note.note?.notebook.id}`,
           },
           {
-            label: "Note",
-            url: `/dashboard/note/${params.noteid}`,
+            label: note.note?.title || "Untitled Note",
+            url: `/dashboard/note/${(await params).noteid}`,
             active: true,
           },
         ]}
@@ -30,7 +30,7 @@ export default async function NotePage({
         {/* TipTap editor */}
         <TipTapEditor
           initialContent={note.note?.content || ""}
-          noteId={params.noteid}
+          noteId={(await params).noteid}
         />
       </div>
     </>

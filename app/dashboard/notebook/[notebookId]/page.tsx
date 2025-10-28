@@ -8,10 +8,10 @@ import { Rocket } from "lucide-react";
 export default async function NotebookPage({
   params,
 }: {
-  params: { notebookId: string };
+  params: Promise<{ notebookId: string }>;
 }) {
   const { notebookId } = await params; // ✅ Await the params first
-  const notebook = await getNotebookById(params.notebookId);
+  const notebook = await getNotebookById((await params).notebookId);
 
   return (
     <>
@@ -47,7 +47,7 @@ export default async function NotebookPage({
                   </p>
                 </div>
                 <div className="flex gap-2 max-md:flex-wrap">
-                  <CreateNoteButton notebookId={params.notebookId} />
+                  <CreateNoteButton notebookId={(await params).notebookId} />
                 </div>
               </div>
             </div>
