@@ -18,21 +18,19 @@ import Code from "@tiptap/extension-code";
 import BulletList from "@tiptap/extension-bullet-list";
 import OrderedList from "@tiptap/extension-ordered-list";
 import { QuoteIcon } from "lucide-react"; // add this at the top with other icons
-
 import { Button } from "@/components/tiptap-ui-primitive/button";
+import { Spacer } from "../tiptap-ui-primitive/spacer";
+import { updateNote } from "@/server/notes";
+import { TextStyle } from "@tiptap/extension-text-style";
 import {
   Toolbar,
   ToolbarGroup,
   ToolbarSeparator,
 } from "@/components/tiptap-ui-primitive/toolbar";
-import { Spacer } from "../tiptap-ui-primitive/spacer";
-import { updateNote } from "@/server/notes";
-import { TextStyle } from "@tiptap/extension-text-style";
 
 import {
   BoldIcon,
   ItalicIcon,
-  UnderlineIcon,
   StrikethroughIcon,
   Link2Icon,
   ListIcon,
@@ -61,6 +59,7 @@ export default function TipTapEditor({
     extensions: [
       StarterKit.configure({
         heading: false, // we'll add our own heading
+        bulletList: false,
       }),
       Heading.configure({ levels: [1, 2, 3, 4] }),
       TextStyle,
@@ -75,6 +74,7 @@ export default function TipTapEditor({
       Link.configure({ openOnClick: true }),
       Color,
       Code,
+      BulletList,
     ],
     content: initialContent || "<p>Start typing...</p>",
     immediatelyRender: false,
