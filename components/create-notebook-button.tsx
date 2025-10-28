@@ -83,8 +83,8 @@ const CreateNotebookButton = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
+        <Button size="sm" className="text-sm">
+          <Plus />
           Create New Notebook
         </Button>
       </DialogTrigger>

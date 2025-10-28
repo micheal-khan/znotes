@@ -250,12 +250,6 @@ export default function TipTapEditor({
         {/* Save / Clear */}
         <ToolbarGroup>
           <Button
-            data-style="primary"
-            onClick={() => console.log("🧩 JSON:", editor.getJSON())}
-          >
-            Save
-          </Button>
-          <Button
             data-style="secondary"
             onClick={() => editor.commands.clearContent()}
           >

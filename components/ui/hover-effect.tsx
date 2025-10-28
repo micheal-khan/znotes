@@ -98,7 +98,7 @@ export const HoverEffect = ({
   return (
     <div
       className={cn(
-        "grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3  py-10",
+        "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
         className
       )}
     >
@@ -131,7 +131,7 @@ export const HoverEffect = ({
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className="absolute top-3 right-3 p-1.5 rounded-full bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition-all duration-200"
+                  className="absolute top-3 right-3 p-1.5 rounded-full transition-all duration-200"
                 >
                   <Settings size={16} />
                 </Button>
@@ -219,8 +219,8 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "rounded-2xl h-full w-full p-4 overflow-hidden bg-black border border-transparent dark:border-white/[0.2] group-hover:border-slate-700 relative z-20",
-        className
+        (className =
+          "rounded-2xl h-full w-full p-4 overflow-hidden bg-white dark:bg-black border-2 border-zinc group-hover:border-primary/[0.5] relative z-20 transition-colors duration-300")
       )}
     >
       <div className="relative z-50">
@@ -237,7 +237,7 @@ export const CardTitle = ({
   children: React.ReactNode;
 }) => {
   return (
-    <h4 className={cn("text-zinc-100 font-bold tracking-wide mt-4", className)}>
+    <h4 className={cn("font-bold tracking-wide mt-4", className)}>
       {children}
     </h4>
   );
@@ -250,12 +250,7 @@ export const CardDescription = ({
   children: React.ReactNode;
 }) => {
   return (
-    <p
-      className={cn(
-        "mt-8 text-zinc-400 tracking-wide leading-relaxed text-sm",
-        className
-      )}
-    >
+    <p className={cn("mt-8 tracking-wide leading-relaxed text-sm", className)}>
       {children}
     </p>
   );
