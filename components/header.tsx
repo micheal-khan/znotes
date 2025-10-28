@@ -1,18 +1,23 @@
 "use client";
+
 import Link from "next/link";
-import { Logo } from "@/components/logo";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { cn } from "@/lib/utils";
 import { useScroll } from "motion/react";
 import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
+import Image from "next/image";
 
 const menuItems = [
-  { name: "Features", href: "#link" },
-  { name: "Solution", href: "#link" },
-  { name: "Pricing", href: "#link" },
-  { name: "About", href: "#link" },
+  { name: "Home", href: "/" },
+  { name: "Features", href: "#features" },
+  {
+    name: "About Developer",
+    href: "https://michealkhan.com/",
+    target: "blank",
+  },
+  { name: "Github", href: "https://github.com/micheal-khan", target: "blank" },
 ];
 
 export const HeroHeader = () => {
@@ -45,7 +50,20 @@ export const HeroHeader = () => {
                 aria-label="home"
                 className="flex items-center space-x-2"
               >
-                <Logo />
+                <Image
+                  src={"/Znotes light.png"}
+                  alt="Logo"
+                  width={32}
+                  height={32}
+                  className="block dark:hidden"
+                />
+                <Image
+                  src={"/Znotes dark.png"}
+                  alt="Logo"
+                  width={32}
+                  height={32}
+                  className="hidden dark:block"
+                />
               </Link>
 
               <button
@@ -62,6 +80,7 @@ export const HeroHeader = () => {
                   {menuItems.map((item, index) => (
                     <li key={index}>
                       <Link
+                        target={item.target}
                         href={item.href}
                         className="text-muted-foreground hover:text-accent-foreground block duration-150"
                       >
