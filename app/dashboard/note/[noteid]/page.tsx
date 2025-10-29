@@ -29,7 +29,7 @@ export default async function NotePage({
       <div className="p-4 flex flex-col gap-4">
         {/* TipTap editor */}
         <TipTapEditor
-          initialContent={note.note?.content || ""}
+          initialContent={note.note?.content || "<p>Start typing...</p>"}
           noteId={(await params).noteid}
         />
       </div>

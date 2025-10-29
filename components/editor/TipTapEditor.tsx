@@ -76,12 +76,14 @@ export default function TipTapEditor({
       Code,
       BulletList,
     ],
-    content: initialContent || "<p>Start typing...</p>",
+    content: initialContent,
     immediatelyRender: false,
     onUpdate: ({ editor }) => {
-      if (noteId) {
-        updateNote(noteId, { content: editor.getJSON() });
-      }
+      console.log("Content updated:", editor.getJSON());
+      
+      // if (noteId) {
+      //   updateNote(noteId, { content: editor.getJSON() });
+      // }
     },
   });
 
@@ -281,6 +283,7 @@ export default function TipTapEditor({
 
       {/* Editor Area */}
       <EditorContent
+        placeholder="Start typing your note..."
         editor={editor}
         className=" 
           w-full h-full flex-1 mt-4 prose dark:prose-invert max-w-none
