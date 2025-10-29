@@ -25,6 +25,12 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { EditProfile } from "./ui/edit-profile";
+import { useState } from "react";
+import { Spinner } from "./ui/spinner";
 
 export function NavUser({
   user,
@@ -32,10 +38,33 @@ export function NavUser({
   user: {
     name: string;
     email: string;
+    userId: string;
     avatar: string;
   };
 }) {
   const { isMobile } = useSidebar();
+  const router = useRouter();
+  const [isLoading, setisLoading] = useState(false);
+
+  const [profile, setProfile] = useState({
+    img: user.avatar,
+    userId: user.userId,
+    fullName: user.name,
+    email: user.email,
+  });
+
+  const handleLogout = async () => {
+    setisLoading(true);
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          toast.message("Logged out...");
+          router.push("/login"); // redirect to login page
+        },
+      },
+    });
+    setisLoading(false);
+  };
 
   return (
     <SidebarMenu>
@@ -69,7 +98,9 @@ export function NavUser({
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">{getInitials(user.name)}</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">
+                    {getInitials(user.name)}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>
@@ -79,19 +110,29 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
+              <EditProfile
+                profile={profile}
+                setProfile={setProfile}
+                trigger={
+                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                    <BadgeCheck />
+                    Edit Account
+                  </DropdownMenuItem>
+                }
+              />
               <DropdownMenuItem>
                 <Bell />
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={(e) => e.preventDefault()}
+              onClick={handleLogout}
+            >
               <LogOut />
               Log out
+              {isLoading ? <Spinner /> : null}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

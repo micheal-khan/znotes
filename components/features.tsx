@@ -20,11 +20,11 @@ export default function Features() {
                                 />
                             </CardDecorator>
 
-                            <h3 className="mt-6 font-medium">Customizable</h3>
+                            <h3 className="mt-6 font-medium">Instant Notes, Zero Lag</h3>
                         </CardHeader>
 
                         <CardContent>
-                            <p className="text-sm">Extensive customization options, allowing you to tailor every aspect to meet your specific needs.</p>
+                            <p className="text-sm">Lightweight and blazing-fast editor — built with Next.js and React for that buttery-smooth experience.</p>
                         </CardContent>
                     </Card>
 
@@ -37,11 +37,11 @@ export default function Features() {
                                 />
                             </CardDecorator>
 
-                            <h3 className="mt-6 font-medium">You have full control</h3>
+                            <h3 className="mt-6 font-medium">Rich Text Editor</h3>
                         </CardHeader>
 
                         <CardContent>
-                            <p className="mt-3 text-sm">From design elements to functionality, you have complete control to create a unique and personalized experience.</p>
+                            <p className="mt-3 text-sm">Markdown support, code blocks, headings, lists, and inline formatting that doesn’t break flow.</p>
                         </CardContent>
                     </Card>
 
@@ -54,11 +54,11 @@ export default function Features() {
                                 />
                             </CardDecorator>
 
-                            <h3 className="mt-6 font-medium">Powered By AI</h3>
+                            <h3 className="mt-6 font-medium">Smart Autosave</h3>
                         </CardHeader>
 
                         <CardContent>
-                            <p className="mt-3 text-sm">Elements to functionality, you have complete control to create a unique experience.</p>
+                            <p className="mt-3 text-sm">Notes save in real-time — no “Oops, I forgot to click save” moments.</p>
                         </CardContent>
                     </Card>
                 </div>

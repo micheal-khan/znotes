@@ -20,12 +20,12 @@ const transitionVariants = {
       y: 0,
       transition: {
         type: "spring",
-        bounce: 0.3,
-        duration: 1.5,
+        bounce: 0.4,
+        duration: 0.3,
       },
     },
   },
-};
+} as const; // 👈 locks literal types (fixes the “string not assignable” issue)
 
 export default function HeroSection() {
   return (
@@ -89,22 +89,11 @@ export default function HeroSection() {
                       size="lg"
                       className="rounded-xl px-5 text-base"
                     >
-                      <Link href="#link">
-                        <span className="text-nowrap">Start Building</span>
+                      <Link href="/dashboard">
+                        <span className="text-nowrap">Start Taking Notes</span>
                       </Link>
                     </Button>
                   </div>
-                  <Button
-                    key={2}
-                    asChild
-                    size="lg"
-                    variant="ghost"
-                    className="h-10.5 rounded-xl px-5 text-base"
-                  >
-                    <Link href="#link">
-                      <span className="text-nowrap">Request a demo</span>
-                    </Link>
-                  </Button>
                 </AnimatedGroup>
               </div>
             </div>

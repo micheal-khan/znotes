@@ -39,6 +39,7 @@ export async function AppSidebar({
   const data = {
     user: {
       name: session.user.name || "User",
+      userId: session.user.id || "User",
       email: session.user.email || "m@example.com",
       avatar: session.user.image || "/avatars/shadcn.jpg",
     },
