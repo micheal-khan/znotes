@@ -5,6 +5,12 @@ import { HoverEffect } from "@/components/ui/hover-effect";
 import { getNotebookById } from "@/server/notebooks";
 import { Rocket } from "lucide-react";
 
+interface TipTapNode {
+  type?: string;
+  text?: string;
+  content?: unknown;
+}
+
 export default async function NotebookPage({
   params,
 }: {
@@ -58,7 +64,10 @@ export default async function NotebookPage({
             notebook?.notebook?.notes?.map((note) => ({
               title: note.title,
               description:
-                extractTextFromTipTap(note.content).slice(0, 100) + "...",
+                extractTextFromTipTap(
+                  note.content as TipTapNode | TipTapNode[] | undefined
+                ).slice(0, 100) + "...",
+
               link: `/dashboard/note/${note.id}`,
               id: note.id,
               isNotebook: true,
@@ -70,12 +79,17 @@ export default async function NotebookPage({
   );
 }
 
-function extractTextFromTipTap(content: any): string {
+export function extractTextFromTipTap(
+  content?: TipTapNode | TipTapNode[]
+): string {
   if (!content) return "";
+
   if (Array.isArray(content)) {
     return content.map(extractTextFromTipTap).join(" ");
   }
-  if (content.text) return content.text;
+
+  if (content.text) return content.text.trim();
   if (content.content) return extractTextFromTipTap(content.content);
+
   return "";
 }

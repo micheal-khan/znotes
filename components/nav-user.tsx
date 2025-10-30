@@ -33,6 +33,7 @@ export function NavUser({
     email: string;
     userId: string;
     avatar: string;
+    summary: string;
   };
 }) {
   const { isMobile } = useSidebar();
@@ -44,6 +45,7 @@ export function NavUser({
     userId: user.userId,
     fullName: user.name,
     email: user.email,
+    summary: user.summary,
   });
 
   const handleLogout = async () => {

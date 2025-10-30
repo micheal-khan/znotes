@@ -7,7 +7,14 @@ import { nextCookies } from "better-auth/next-js";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-
+interface VerificationEmailParams {
+  user: {
+    email: string;
+    name: string;
+    id?: string;
+  };
+  url: string;
+}
 export const auth = betterAuth({
   database: drizzleAdapter(db, { provider: "pg", schema }),
 
@@ -19,7 +26,7 @@ export const auth = betterAuth({
   },
   emailVerification: {
     enabled: true,
-    sendVerificationEmail: async ({ user, url }: any) => {
+    sendVerificationEmail: async ({ user, url }: VerificationEmailParams) => {
       console.log("Sending verification email to:", user.email);
 
       await resend.emails.send({

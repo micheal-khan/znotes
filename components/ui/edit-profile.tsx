@@ -18,9 +18,16 @@ import { Dispatch, SetStateAction, ReactNode } from "react";
 import { updateUserName } from "@/server/users";
 import { useRouter } from "next/navigation";
 
+interface Profile {
+  fullName: string;
+  userId: string;
+  img: string;
+  email: string;
+  summary: string;
+}
 interface EditProfileProps {
-  profile: any; // 👈 replace `any` with your actual profile type if you have one
-  setProfile: Dispatch<SetStateAction<any>>; // same here
+  profile: Profile; // 👈 replace `any` with your actual profile type if you have one
+  setProfile: Dispatch<SetStateAction<Profile>>; // same here
   trigger: ReactNode;
 }
 
@@ -33,8 +40,11 @@ export function EditProfile({
   const [formData, setFormData] = useState(profile);
   const router = useRouter();
 
-  const handleChange = (e: { target: { id: string; value: any } }) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
   const handleSave = async () => {

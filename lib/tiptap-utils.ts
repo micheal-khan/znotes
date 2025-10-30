@@ -119,7 +119,9 @@ export function focusNextNode(editor: Editor) {
   let nextSel = null;
   try {
     nextSel = Selection.findFrom(selection.$to, 1, true);
-  } catch (_) {}
+  } catch {
+    // intentionally empty: this just means no next selection found
+  }
 
   const paragraphType = state.schema.nodes.paragraph;
   if (!paragraphType) {

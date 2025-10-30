@@ -42,6 +42,7 @@ export async function AppSidebar({
       userId: session.user.id || "User",
       email: session.user.email || "m@example.com",
       avatar: session.user.image || "/avatars/shadcn.jpg",
+      summary: session.user.image || "/avatars/shadcn.jpg",
     },
     navMain: [
       ...(notebooks.notebooks?.map((notebook) => ({

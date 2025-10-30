@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor, EditorContent, JSONContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Heading, { Level } from "@tiptap/extension-heading";
 import TextAlign from "@tiptap/extension-text-align";
@@ -47,7 +47,7 @@ import {
 import { updateNote } from "@/server/notes";
 
 interface TipTapEditorProps {
-  initialContent?: any;
+  initialContent?: JSONContent | null;
   noteId?: string;
 }
 
@@ -70,24 +70,6 @@ export default function TipTapEditor({
       }),
       Heading.configure({
         levels: [1, 2, 3, 4, 5, 6],
-        HTMLAttributes: (level: any) => {
-          switch (level) {
-            case 1:
-              return { class: "text-4xl font-extrabold mb-3 mt-6" };
-            case 2:
-              return { class: "text-3xl font-bold mb-3 mt-5" };
-            case 3:
-              return { class: "text-2xl font-semibold mb-2 mt-4" };
-            case 4:
-              return { class: "text-xl font-semibold mb-2 mt-3" };
-            case 5:
-              return { class: "text-lg font-medium mb-2 mt-2" };
-            case 6:
-              return { class: "text-base font-medium italic mb-1 mt-2" };
-            default:
-              return {};
-          }
-        },
       }),
       TextStyle,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
