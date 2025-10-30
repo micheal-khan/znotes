@@ -43,7 +43,7 @@ const AccountVerificationEmail = (props: Props) => {
               </Text>
 
               <Text className="text-gray-600 text-[16px] leading-[24px] mb-[24px] m-0">
-                Thanks for signing up! We're excited to have you join our
+                Thanks for signing up! We&apos;re excited to have you join our
                 community. To ensure the security of your account and unlock all
                 features, please verify your email address by clicking the
                 button below.
@@ -79,14 +79,14 @@ const AccountVerificationEmail = (props: Props) => {
                 </Text>
                 <Text className="text-amber-700 text-[14px] m-0 leading-[20px]">
                   This verification link will expire in 24 hours for your
-                  security. If you didn't create this account, please ignore
+                  security. If you didn&apos;t create this account, please ignore
                   this email.
                 </Text>
               </Section>
 
               {/* Benefits Section */}
               <Text className="text-gray-800 text-[16px] font-semibold mb-[16px] m-0">
-                What's next after verification?
+                What&apos;s next after verification?
               </Text>
 
               <Section className="mb-[24px]">

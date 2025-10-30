@@ -1,4 +1,3 @@
-import { Logo } from "@/components/logo";
 import { Github, Globe } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,7 +17,7 @@ export default function FooterSection() {
   return (
     <footer className="py-16 md:py-32">
       <div className="mx-auto max-w-5xl px-6">
-        <Link href="/" aria-abel="go home" className="mx-auto block size-fit">
+        <Link href="/" aria-label="go home" className="mx-auto block size-fit">
           <Image
             src={"/Znotes light.png"}
             alt="Logo"

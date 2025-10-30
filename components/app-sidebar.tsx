@@ -1,5 +1,4 @@
 import * as React from "react";
-import { BookOpen, Command } from "lucide-react";
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
 import {
@@ -16,6 +15,7 @@ import { SearchForm } from "./search-form";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Image from "next/image";
+import Link from "next/link";
 
 export async function AppSidebar({
   ...props
@@ -61,7 +61,7 @@ export async function AppSidebar({
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="/">
+              <Link href="/">
                 <Image
                   src={"/Znotes light.png"}
                   alt="Logo"
@@ -80,7 +80,7 @@ export async function AppSidebar({
                   <span className="truncate font-medium">Znotes</span>
                   <span className="truncate text-xs">Notes taking app</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

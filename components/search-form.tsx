@@ -7,7 +7,7 @@ import {
   SidebarGroupContent,
   SidebarInput,
 } from "@/components/ui/sidebar";
-import { parseAsInteger, useQueryState } from "nuqs";
+import { useQueryState } from "nuqs";
 
 export function SearchForm({ ...props }: React.ComponentProps<"form">) {
   const [search, setSearch] = useQueryState("search", { defaultValue: "" });

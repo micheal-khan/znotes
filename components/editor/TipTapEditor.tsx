@@ -20,7 +20,6 @@ import OrderedList from "@tiptap/extension-ordered-list";
 import { QuoteIcon } from "lucide-react"; // add this at the top with other icons
 import { Button } from "@/components/tiptap-ui-primitive/button";
 import { Spacer } from "../tiptap-ui-primitive/spacer";
-import { updateNote } from "@/server/notes";
 import { TextStyle } from "@tiptap/extension-text-style";
 import {
   Toolbar,
@@ -45,6 +44,7 @@ import {
   Code2,
   Highlighter,
 } from "lucide-react";
+import { updateNote } from "@/server/notes";
 
 interface TipTapEditorProps {
   initialContent?: any;
@@ -118,8 +118,8 @@ export default function TipTapEditor({
     content: initialContent,
     immediatelyRender: false,
     onUpdate: ({ editor }) => {
-      console.log("Content updated:", editor.getJSON());
-      // if (noteId) updateNote(noteId, { content: editor.getJSON() });
+      // console.log("Content updated:", editor.getJSON());
+      if (noteId) updateNote(noteId, { content: editor.getJSON() });
     },
   });
 

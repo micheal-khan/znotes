@@ -33,7 +33,7 @@ export function EditProfile({
   const [formData, setFormData] = useState(profile);
   const router = useRouter();
 
-  const handleChange = (e: { target: { id: any; value: any } }) => {
+  const handleChange = (e: { target: { id: string; value: any } }) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 

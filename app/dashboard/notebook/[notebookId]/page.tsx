@@ -10,7 +10,6 @@ export default async function NotebookPage({
 }: {
   params: Promise<{ notebookId: string }>;
 }) {
-  const { notebookId } = await params; // ✅ Await the params first
   const notebook = await getNotebookById((await params).notebookId);
 
   return (

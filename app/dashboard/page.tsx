@@ -1,12 +1,9 @@
 import Bread from "@/components/breadcrums";
 import CreateNotebookButton from "@/components/create-notebook-button";
-import { SearchForm } from "@/components/search-form";
 import { Banner } from "@/components/ui/banner";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { HoverEffect } from "@/components/ui/hover-effect";
 import { getNotebooks } from "@/server/notebooks";
-import { Rocket, X } from "lucide-react";
+import { Rocket } from "lucide-react";
 
 export default async function Page() {
   const notebooks = await getNotebooks();

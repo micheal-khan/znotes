@@ -73,7 +73,7 @@ export function LoginForm({
 
   const GoogleSignIn = async () => {
     setIsGoogleLoading(true);
-    const data = await authClient.signIn.social({
+    await authClient.signIn.social({
       provider: "google",
       callbackURL: "/dashboard",
     });
@@ -81,7 +81,7 @@ export function LoginForm({
   };
   const GithubSignIn = async () => {
     setIsGithubLoading(true);
-    const data = await authClient.signIn.social({
+    await authClient.signIn.social({
       provider: "github",
       callbackURL: "/dashboard",
     });

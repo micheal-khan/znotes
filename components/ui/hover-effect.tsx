@@ -42,7 +42,7 @@ export const HoverEffect = ({
   }[];
   className?: string;
 }) => {
-  let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -210,7 +210,6 @@ export const HoverEffect = ({
 };
 
 export const Card = ({
-  className,
   children,
 }: {
   className?: string;
@@ -219,8 +218,7 @@ export const Card = ({
   return (
     <div
       className={cn(
-        (className =
-          "rounded-2xl h-full w-full p-4 overflow-hidden bg-white dark:bg-black border-2 border-zinc group-hover:border-primary/[0.5] relative z-20 transition-colors duration-300")
+        "rounded-2xl h-full w-full p-4 overflow-hidden bg-white dark:bg-black border-2 border-zinc group-hover:border-primary/[0.5] relative z-20 transition-colors duration-300"
       )}
     >
       <div className="relative z-50">
