@@ -47,7 +47,7 @@
   --shadow-blur: 0px;
   --shadow-spread: 0px;
   --shadow-opacity: 0;
-  --shadow-color: rgba(29,161,242,0.15);
+  --shadow-color: rgba(29, 161, 242, 0.15);
   --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
   --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
   --shadow-sm: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
@@ -102,7 +102,7 @@
   --shadow-blur: 0px;
   --shadow-spread: 0px;
   --shadow-opacity: 0;
-  --shadow-color: rgba(29,161,242,0.25);
+  --shadow-color: rgba(29, 161, 242, 0.25);
   --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
   --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
   --shadow-sm: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
@@ -180,4 +180,51 @@
 ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
+}
+
+.tiptap {
+  p {
+    @apply my-4 first:mt-0 last:mb-0 text-base leading-relaxed;
+  }
+
+  /* --- Fix for TipTap Headings inside Tailwind Prose --- */
+
+  h1 {
+    @apply text-4xl font-bold mt-5 mb-3;
+  }
+
+  h2 {
+    @apply text-3xl font-bold mb-3 mt-5;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold mb-2 mt-4;
+  }
+
+  h4 {
+    @apply text-xl font-semibold mb-2 mt-3;
+  }
+
+  h5 {
+    @apply text-lg font-medium mb-2 mt-2;
+  }
+
+  h6 {
+    @apply text-base font-medium italic mb-1 mt-2;
+  }
+
+  /* --- TipTap Blockquote Style Override (Brand Aligned) --- */
+  blockquote {
+    @apply relative pl-6 italic text-gray-700 dark:text-gray-300 border-l-4 border-l-primary rounded-sm my-4 py-2 transition-all duration-300;
+  }
+
+  blockquote::before {
+    content: "“";
+    @apply absolute left-0 top-0 text-6xl text-primary font-serif opacity-30 -translate-x-4 -translate-y-2;
+  }
+
+  blockquote p {
+    @apply mb-0;
+  }
+
 }

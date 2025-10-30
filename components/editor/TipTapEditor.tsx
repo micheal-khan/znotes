@@ -56,12 +56,39 @@ export default function TipTapEditor({
   noteId,
 }: TipTapEditorProps) {
   const editor = useEditor({
+    editorProps: {
+      attributes: {
+        class:
+          "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none",
+      },
+    },
     extensions: [
       StarterKit.configure({
-        heading: false, // we'll add our own heading
-        bulletList: false,
+        heading: false, // we'll define our own
+        bulletList: false, // we'll define custom bullet styling
+        orderedList: false,
       }),
-      Heading.configure({ levels: [1, 2, 3, 4] }),
+      Heading.configure({
+        levels: [1, 2, 3, 4, 5, 6],
+        HTMLAttributes: (level: any) => {
+          switch (level) {
+            case 1:
+              return { class: "text-4xl font-extrabold mb-3 mt-6" };
+            case 2:
+              return { class: "text-3xl font-bold mb-3 mt-5" };
+            case 3:
+              return { class: "text-2xl font-semibold mb-2 mt-4" };
+            case 4:
+              return { class: "text-xl font-semibold mb-2 mt-3" };
+            case 5:
+              return { class: "text-lg font-medium mb-2 mt-2" };
+            case 6:
+              return { class: "text-base font-medium italic mb-1 mt-2" };
+            default:
+              return {};
+          }
+        },
+      }),
       TextStyle,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       Highlight.configure({ multicolor: true }),
@@ -74,16 +101,25 @@ export default function TipTapEditor({
       Link.configure({ openOnClick: true }),
       Color,
       Code,
-      BulletList,
+
+      // ✅ Proper bullet & ordered list styling
+      BulletList.configure({
+        HTMLAttributes: {
+          class: "list-disc pl-6 space-y-1",
+        },
+      }),
+      OrderedList.configure({
+        HTMLAttributes: {
+          class: "list-decimal pl-6 space-y-1",
+        },
+      }),
     ],
+    autofocus: true,
     content: initialContent,
     immediatelyRender: false,
     onUpdate: ({ editor }) => {
       console.log("Content updated:", editor.getJSON());
-      
-      // if (noteId) {
-      //   updateNote(noteId, { content: editor.getJSON() });
-      // }
+      // if (noteId) updateNote(noteId, { content: editor.getJSON() });
     },
   });
 
@@ -160,7 +196,7 @@ export default function TipTapEditor({
 
         {/* Headings */}
         <ToolbarGroup>
-          {([1, 2, 3, 4] as Level[]).map((level) => (
+          {([1, 2, 3, 4, 5, 6] as Level[]).map((level) => (
             <Button
               key={level}
               data-style="ghost"
