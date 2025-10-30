@@ -20,7 +20,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { Spinner } from "./ui/spinner";
 import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
@@ -38,8 +38,8 @@ export function ResetPasswordForm({
 }: React.ComponentProps<"div">) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const searchParam = useSearchParams();
-  const token = searchParam.get("token") || "";
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -76,75 +76,73 @@ export function ResetPasswordForm({
   }
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <div className={cn("flex flex-col gap-6", className)} {...props}>
-        <Card>
-          <CardHeader>
-            <CardTitle>Reset password to your account.</CardTitle>
-            <CardDescription>
-              Enter your new password to your account
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
-              <FieldGroup>
-                {/* Password */}
-                <Controller
-                  name="password"
-                  control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor="password">Password</FieldLabel>
-                      <Input
-                        {...field}
-                        type="text"
-                        id="password"
-                        placeholder="********"
-                        aria-invalid={fieldState.invalid}
-                        required
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
-                />
+    <div className={cn("flex flex-col gap-6", className)} {...props}>
+      <Card>
+        <CardHeader>
+          <CardTitle>Reset password to your account.</CardTitle>
+          <CardDescription>
+            Enter your new password to your account
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
+            <FieldGroup>
+              {/* Password */}
+              <Controller
+                name="password"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="password">Password</FieldLabel>
+                    <Input
+                      {...field}
+                      type="text"
+                      id="password"
+                      placeholder="********"
+                      aria-invalid={fieldState.invalid}
+                      required
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
 
-                {/* Email */}
-                <Controller
-                  name="confirm_password"
-                  control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor="confirm_password">
-                        Confirm Password
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        type="password"
-                        id="confirm_password"
-                        aria-invalid={fieldState.invalid}
-                        placeholder="m@example.com"
-                        required
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
-                />
+              {/* Email */}
+              <Controller
+                name="confirm_password"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="confirm_password">
+                      Confirm Password
+                    </FieldLabel>
+                    <Input
+                      {...field}
+                      type="password"
+                      id="confirm_password"
+                      aria-invalid={fieldState.invalid}
+                      placeholder="m@example.com"
+                      required
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
 
-                {/* Buttons */}
-                <Field>
-                  <Button type="submit" disabled={isLoading}>
-                    {isLoading ? <Spinner /> : "Reset Password"}
-                  </Button>
-                </Field>
-              </FieldGroup>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
-    </Suspense>
+              {/* Buttons */}
+              <Field>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? <Spinner /> : "Reset Password"}
+                </Button>
+              </Field>
+            </FieldGroup>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

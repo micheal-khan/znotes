@@ -1,3 +1,4 @@
+import PasswordResetEmail from "@/components/emails/resetpassword-email";
 import AccountVerificationEmail from "@/components/emails/verification-email";
 import { db } from "@/db/drizzle";
 import { schema, verification } from "@/db/schema";
@@ -23,6 +24,21 @@ export const auth = betterAuth({
     enabled: true,
     requireEmailVerification: true,
     autoSignIn: false,
+    sendResetPassword: async ({ user, url, token }) => {
+      await resend.emails.send({
+        from: "Znotes <znotes@michealkhan.com>",
+        to: [user.email],
+        subject: "Reset your password",
+        react: PasswordResetEmail({
+          userName: user.name,
+          resetPasswordUrl: url,
+        }),
+      });
+    },
+    onPasswordReset: async ({ user }, request) => {
+      // your logic here
+      console.log(`Password for user ${user.email} has been reset.`);
+    },
   },
   emailVerification: {
     enabled: true,
